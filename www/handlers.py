@@ -1,10 +1,7 @@
 
 # coding: utf-8
 
-# In[ ]:
-
-
-import re, time, json, logging, base64, asycnio
+import re, time, json, logging, base64, asyncio,orm
 
 from coroweb import get,post
 
@@ -12,9 +9,10 @@ from models import User,Comment,Blog, next_id
 
 @get('/')
 async def index(request):
-    users = await User.findAll()
+    blogs = await Blog.findAll()
+    print(blogs)
     return {
-        '__template__':'test.html'
-        'users':'users'
+        '__template__':'blogs.html',
+        'blogs' : blogs
     }
 

@@ -1,9 +1,6 @@
 
 # coding: utf-8
 
-# In[3]:
-
-
 import asyncio,os,inspect,logging,functools
 
 from urllib import parse
@@ -45,7 +42,7 @@ def get_named_kw_args(fn):
     args = []
     params = inspect.signature(fn).parameters
     for name,param in params.items():
-        if param.kind == inspect.Parameter.KEYWOR_ONLY:
+        if param.kind == inspect.Parameter.KEYWORD_ONLY:
             args.append(name)
     return tuple(args)
 
@@ -76,7 +73,7 @@ def has_request_arg(fn):
 
 
 #从URL中分析要接收的参数，从request中获取必要的参数，调用URL函数，把结果转换为web.response对象
-class RequsetHandler(object):
+class RequestHandler(object):
     def __init__(self,app,fn):
         self._app = app
         self._func = fn
@@ -158,7 +155,7 @@ def add_routes(app,module_name):
         mod = __import__(module_name,globals(),locals())
     else:
         name = module_name[n+1:]
-        mod = getattr(__import__(module_name,globals(),locals(),[name]),name)
+        mod = getattr(__import__(module_name[:n],globals(),locals(),[name]),name)
     for attr in dir(mod):
         if attr.startswith('_'):
             continue
@@ -169,9 +166,8 @@ def add_routes(app,module_name):
             if method and path:
                 add_route(app,fn)
             
+print('coroweb done')  
 
-
-# In[ ]:
 
 
 
