@@ -109,7 +109,7 @@ class RequestHandler(object):
         if kw is None:
             kw = dict(**request.match_info)
         else:
-            if not self._has_var_kw_args and self._named_kw_args:
+            if not self._has_var_kw_arg and self._named_kw_args:
                 #remove all unnamed kw
                 copy = dict()
                 for name in self._named_kw_args:
